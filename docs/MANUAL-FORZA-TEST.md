@@ -1,6 +1,7 @@
 # Manual end-to-end test: Xbox Cloud Gaming + Forza Horizon 5
 
-Not automated because it needs your signed-in browser session (no credentials or cookies are ever read by XControl or by the test tooling).
+Not automated because it needs a signed-in Xbox session (no credentials or cookies are ever read by XControl or by the test tooling).
+The author has played Forza Horizon 5 with XControl in both the Xbox app and Chrome (overall result: working); this checklist is for itemised results.
 Record results in the table at the bottom.
 
 **Before you start:** driver installed; XControl running; profile *Forza Horizon 5*; Chrome/Edge open on xbox.com/play, signed in.

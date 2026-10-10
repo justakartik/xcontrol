@@ -22,7 +22,9 @@ Play Xbox Cloud Gaming with your **keyboard and mouse**. XControl creates a virt
 
 ### Read before you install
 - ⚠️ **Not code-signed.** If Windows **Smart App Control** is on it will block the app. Turn it off in Windows Security → App & browser control (Windows can't turn it back on without a reset).
-- ⚠️ **Not yet verified in a real Forza Horizon 5 / Xbox Cloud Gaming session.** Verified: driver install, Windows sees the pad, a Chromium browser's Gamepad API sees it and receives keys, simultaneous inputs and mouse movement, OFF-while-held, global shortcut, keybind persistence, 77 automated tests. Not verified: Google Chrome + the xCloud page, Forza's in-game bindings (my defaults are a best guess). Reports welcome!
+- ✅ **Played and working:** the author tested it with **Forza Horizon 5** in **both the Xbox app and Google Chrome**. Enable/disable with **`Ctrl+Shift+F8`**.
+- Also verified: driver install, Windows sees the pad, a Chromium browser's Gamepad API receives keys, simultaneous inputs and mouse movement, OFF-while-held, global shortcut, keybind persistence, 77 automated tests.
+- That was one person on one PC. Other games/browsers/PCs are untested — reports welcome!
 - The virtual pad comes from **ViGEmBus 1.22.0**, which its author has retired (it still works; it's Microsoft-signed).
 - Not implemented yet: Shift+key chords, hold/sequence bindings, rumble, Guide button, auto game detection, auto-update.
 

@@ -12,7 +12,8 @@ Made by **[justakartik](https://github.com/justakartik)**.
 
 - 🤖 **Yes, I made this with Claude.** It's vibe-coded. If that makes you want to cry in the comments, that's okay, there's a back button. It builds, it has 77 passing tests, and I'm telling you exactly what is and isn't tested below, which is more than a lot of "hand-crafted" stuff does.
 - 💸 **This is not a rich-kid product.** Free, open source, MIT. No paywall, no "Pro" tier, no account, no telemetry. You don't need a $60 controller to play on your own PC.
-- 🧪 **It's early (v0.1.0).** It works all the way up to the browser's gamepad API. **It has not yet been proven inside a real Forza Horizon 5 cloud session** — that part needs a signed-in Xbox account, so I couldn't automate it. If you test it, please tell me what happens (issues welcome).
+- ✅ **Tested for real:** I played **Forza Horizon 5** with it and it worked in **both the Xbox app and Google Chrome**. Turn it on/off with **`Ctrl+Shift+F8`**.
+- 🧪 **It's still early (v0.1.0).** That was my own hands-on testing on one PC, not a lab. Found a bug or a game that misbehaves? Open an issue and tell me what happened.
 
 ---
 
@@ -53,7 +54,7 @@ Needs Windows 10/11 64-bit. Nothing else — the zip includes everything (no .NE
 ## How to use it
 
 1. Open Xbox Cloud Gaming (Chrome/Edge) or the Xbox app and start your game.
-2. Press **`Ctrl+Shift+F8`** (or hit the big button in XControl) to turn the controller **ON**.
+2. Press **`Ctrl+Shift+F8`** (or hit the big button in XControl) to turn the controller **ON**. Press **`Ctrl+Shift+F8`** again to turn it **OFF** — same shortcut works in the Xbox app and in Chrome.
 3. Click into the game window and press a key (browsers only show a pad after the first input).
 4. Play. Default **Forza** layout: `W` gas · `S` brake/reverse · `A`/`D` steer · `Space` handbrake · `Q`/`E` shift · mouse = camera.
 5. Need to click something on the page? Hit the shortcut to turn OFF, click, turn ON again. (While ON, bound mouse buttons are taken over and the cursor is frozen so it can't wander out of the game.)
@@ -120,8 +121,7 @@ Measured here: key press → virtual pad report ≈ 3.4 ms average (7.9 ms worst
 
 ## Honest limitations
 
-- **Not tested in a real Forza / Xbox Cloud session yet.** Forza's default bindings in the profile are my best guess at its usual Xbox layout, not verified in-game. Checklist: [docs/MANUAL-FORZA-TEST.md](docs/MANUAL-FORZA-TEST.md).
-- Browser testing so far used a Chromium pane, not Google Chrome itself.
+- **Game testing so far is the author's own:** Forza Horizon 5 played and working in the Xbox app and in Chrome. Other games, other browsers (Edge, Firefox) and other PCs haven't been tried — reports welcome. Want to run the full checklist? [docs/MANUAL-FORZA-TEST.md](docs/MANUAL-FORZA-TEST.md).
 - Unsigned app (Smart App Control must be off). ViGEmBus is retired upstream — a future Windows update could break it.
 - Not built yet: Shift+key style combos, hold/sequence bindings, rumble, Guide button, auto game detection, auto-updates.
 - UI was checked through Windows UI Automation, not by eyeballing screenshots — expect some rough edges. Tray menu, import/export dialogs and rename/delete weren't clicked through by a human.

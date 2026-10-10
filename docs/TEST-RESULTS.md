@@ -15,7 +15,7 @@ missing driver reported, dispose neutralises, profile switch, wake-nudge, tick r
 |---|---|---|
 | Driver install (signature + hash verified first) | Verified | ViGEmBus 1.22.0 running; loads with memory integrity (HVCI) enabled |
 | Windows sees the pad | Verified | PnP: *Xbox 360 Controller for Windows* appears on ON, disappears on OFF |
-| Browser Gamepad API sees it | Partial | Chromium pane of the Claude desktop app: `Xbox 360 Controller (XInput STANDARD GAMEPAD)`, standard mapping, 4 axes / 17 buttons, seen ≈0.56 s after creation. **Google Chrome itself and the xCloud page not checked.** |
+| Browser Gamepad API sees it | Verified | Chromium pane of the Claude desktop app: `Xbox 360 Controller (XInput STANDARD GAMEPAD)`, standard mapping, 4 axes / 17 buttons, seen ≈0.56 s after creation. Google Chrome: see the manual row below. |
 | Keys → buttons/triggers/sticks through the real app | Verified | XInput readings + browser log: W→RT 255; W+A+Space→A + LX −32767 + RT together; D→LX +32767 |
 | Mouse → right stick, recentres on stop | Verified | XInput: ±32767 pulses with injected 40-count steps; returns to 0; browser saw axis 2 = ±1, axis 3 negative for mouse-up |
 | Unbound key (Shift) does nothing | Verified | XInput unchanged |
@@ -30,8 +30,8 @@ missing driver reported, dispose neutralises, profile switch, wake-nudge, tick r
 | Cursor actually frozen while active | Not tested | |
 | Install via `install.ps1` from the extracted zip, launch installed app | Verified | |
 | `uninstall.ps1` | Not tested | |
-| Xbox Cloud Gaming page recognises the pad | **Blocked** | Needs your signed-in Chrome session |
-| Forza Horizon 5 launch, gameplay input, in-game default bindings | **Blocked** | Same; checklist in MANUAL-FORZA-TEST.md |
+| Xbox Cloud Gaming / Forza Horizon 5 — launch and play, in the **Xbox app** and in **Google Chrome**, toggled with Ctrl+Shift+F8 | **Verified manually by the author (justakartik)** | Reported by the author after playing; not observed or recorded by the tooling that produced the other rows, and no per-binding results were collected |
+| Forza's in-game meaning of each default binding (handbrake, rewind, camera…) | Not itemised | Author reported it playing/working overall; the a–m checklist was not filled in |
 | Recovery after game/session end, browser restart | Not tested | Engine logic unit-tested; no real session |
 
 ## Performance (published ReadyToRun build, 125 Hz engine)
