@@ -32,7 +32,8 @@ Made by **[justakartik](https://github.com/justakartik)**.
 
 ## Install (the easy way)
 
-1. Grab the latest **`XControl-x.y.z-win-x64.zip`** from the [Releases](../../releases) page and unzip it.
+1. Grab the latest **`XControl-x.y.z-win-x64.zip`** from the [Releases](../../releases) page and unzip it (right-click → *Extract All*).
+   > ⚠️ Use the zip from **Releases**, *not* GitHub's green **Code → Download ZIP** button. That one is just the source code and has no app inside, so `install.ps1` will tell you `app\XControl.exe not found`. (v0.1.1+ opens the Releases page for you if you do this; `install.ps1 -Download` fetches the release itself.)
 2. Open PowerShell in that folder and run:
    ```powershell
    powershell -ExecutionPolicy Bypass -File .\install.ps1
@@ -66,6 +67,7 @@ Needs Windows 10/11 64-bit. Nothing else — the zip includes everything (no .NE
 Settings live in `%APPDATA%\XControl` (`settings.json`, `profiles\*.json`, `logs\xcontrol.log`).
 
 ### It's not working?
+0. **`install.ps1` says `app\XControl.exe not found`?** You ran it from the source download. Get the zip from [Releases](../../releases) (see Install above).
 1. Dashboard should say **Driver: Installed**, and after you switch ON, **Virtual controller: Connected**.
 2. Hit **Open browser gamepad test** on the Dashboard, keep that tab focused, press a bound key — it should list `Xbox 360 Controller (XInput STANDARD GAMEPAD)`.
 3. Keys do nothing? Is the controller ON? Is a browser/Xbox app in front — or tick **Work in any window**? Admin (elevated) windows can't be grabbed by a normal app.
