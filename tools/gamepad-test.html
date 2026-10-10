@@ -1,0 +1,42 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>XControl gamepad test</title>
+<body style="font-family:monospace;background:#111;color:#eee">
+<h3>Gamepad API test</h3>
+<p>Press any button on the pad (or enable XControl and press a mapped key) — browsers hide gamepads until first input.</p>
+<pre id="out">Waiting for gamepad…</pre>
+<script>
+const out = document.getElementById('out');
+let maxAbs = [0,0,0,0], seen = new Set(), maxLT = 0, maxRT = 0, frames = 0;
+window.__log = [];            // [t, pressedButtonIndexes, axes[4], lt, rt] each time the state changes
+let lastKey = '';
+window.__result = { connected: false };
+function tick() {
+  const pads = Array.from(navigator.getGamepads()).filter(Boolean);
+  frames++;
+  if (pads.length) {
+    const p = pads[0];
+    p.axes.forEach((a, i) => maxAbs[i] = Math.max(maxAbs[i], Math.abs(a)));
+    p.buttons.forEach((b, i) => { if (b.pressed) seen.add(i); });
+    maxLT = Math.max(maxLT, p.buttons[6].value); maxRT = Math.max(maxRT, p.buttons[7].value);
+    const pressed = p.buttons.map((b, i) => b.pressed && i !== 6 && i !== 7 ? i : -1).filter(i => i >= 0);
+    const axes = p.axes.map(a => +a.toFixed(2));
+    const lt = +p.buttons[6].value.toFixed(2), rt = +p.buttons[7].value.toFixed(2);
+    const key = JSON.stringify([pressed, axes, lt, rt]);
+    if (key !== lastKey) { lastKey = key; if (window.__log.length < 20000) window.__log.push([Date.now(), pressed, axes, lt, rt]); }
+    window.__result = { connected: true, id: p.id, mapping: p.mapping, axes: p.axes.length, buttons: p.buttons.length,
+      maxAbsAxes: maxAbs.map(v => +v.toFixed(3)), buttonsEverPressed: [...seen].sort((a,b)=>a-b), maxLT: +maxLT.toFixed(3), maxRT: +maxRT.toFixed(3),
+      now: { pressed, axes, lt, rt }, frames, logEntries: window.__log.length };
+  } else if (window.__result.connected) { window.__result.connected = false; window.__result.disconnectedAt = Math.round(performance.now()); }
+  out.textContent = JSON.stringify(window.__result, null, 2);
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+window.addEventListener('gamepadconnected', e => { window.__connectedEvent = e.gamepad.id; window.__connectedAtWall = Date.now(); });
+window.__focusLog = [];
+window.addEventListener('focus', () => window.__focusLog.push([Date.now(), 'focus']));
+window.addEventListener('blur', () => window.__focusLog.push([Date.now(), 'blur']));
+window.__firstPadSeenWall = 0;
+setInterval(() => { if (!window.__firstPadSeenWall && Array.from(navigator.getGamepads()).some(Boolean)) window.__firstPadSeenWall = Date.now(); }, 5);
+window.addEventListener('gamepaddisconnected', () => { window.__disconnectedEvent = true; });
+</script>

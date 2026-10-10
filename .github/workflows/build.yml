@@ -1,0 +1,25 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Build
+        run: dotnet build XControl.sln -c Release
+      - name: Test (no driver needed)
+        run: dotnet test tests/XControl.Tests -c Release --no-build
+      - name: Publish (self-contained, ReadyToRun)
+        run: dotnet publish src/XControl.App -c Release -r win-x64 --self-contained true -p:PublishReadyToRun=true -o publish
+      - uses: actions/upload-artifact@v4
+        with:
+          name: XControl-win-x64
+          path: publish
