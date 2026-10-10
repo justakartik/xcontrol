@@ -44,6 +44,10 @@ This app isn't code-signed (certificates cost money — see "not for rich kids" 
 
 Needs Windows 10/11 64-bit. Nothing else — the zip includes everything (no .NET install).
 
+**Just want the app?** Each release also has a single `XControl-x.y.z-win-x64.exe` (no install, no .NET needed) — but you must already have the ViGEmBus driver (the zip's `install.ps1` can install it for you).
+
+**Linux / macOS?** Sorry, no — this is Windows-only by nature (it uses a Windows kernel driver and Windows input APIs). Linux has `uinput` for virtual gamepads, which would be a different project.
+
 ---
 
 ## How to use it
@@ -89,7 +93,7 @@ The driver can also be removed from *Settings → Apps → ViGEm Bus Driver*.
 You need the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0).
 
 ```powershell
-git clone https://github.com/justakartik/XControl.git
+git clone https://github.com/justakartik/xcontrol.git
 cd XControl
 powershell -ExecutionPolicy Bypass -File scripts\build.ps1   # build + 77 tests + publish + zip in dist\
 dotnet test tests\XControl.Tests                               # just the tests

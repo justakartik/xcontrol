@@ -1,0 +1,56 @@
+name: release
+
+# Push a tag like v0.1.0 (or run this workflow by hand) and a GitHub Release is created with:
+#   XControl-<version>-win-x64.zip   full package: app + install/uninstall scripts + driver installer + docs
+#   XControl-<version>-win-x64.exe   single-file self-contained app (driver must already be installed)
+#   SHA256SUMS.txt
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Build, test, package
+        shell: pwsh
+        run: ./scripts/build.ps1
+
+      - name: Checksums
+        shell: pwsh
+        run: |
+          Get-ChildItem dist -File | Where-Object { $_.Extension -in '.zip','.exe' } |
+            ForEach-Object { "$((Get-FileHash $_.FullName -Algorithm SHA256).Hash)  $($_.Name)" } |
+            Set-Content dist/SHA256SUMS.txt
+          Get-Content dist/SHA256SUMS.txt
+
+      - name: Pick release notes
+        id: notes
+        shell: pwsh
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $file = "docs/release-notes/$tag.md"
+          if (-not (Test-Path $file)) { $file = "docs/release-notes/latest.md" }
+          "file=$file" >> $env:GITHUB_OUTPUT
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: XControl ${{ github.ref_name }}
+          body_path: ${{ steps.notes.outputs.file }}
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          files: |
+            dist/*.zip
+            dist/*.exe
+            dist/SHA256SUMS.txt

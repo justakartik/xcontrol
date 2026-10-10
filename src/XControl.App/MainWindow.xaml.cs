@@ -298,8 +298,14 @@ public partial class MainWindow : Window
 
     void OpenGamepadTest_Click(object sender, RoutedEventArgs e)
     {
-        var f = Path.Combine(AppContext.BaseDirectory, "gamepad-test.html");
-        if (!File.Exists(f)) { MessageBox.Show(this, "gamepad-test.html not found next to the application."); return; }
+        // the page ships inside the exe; write it out so the default browser can open it
+        var f = Path.Combine(Services.Store.Root, "gamepad-test.html");
+        using (var rs = Assembly.GetExecutingAssembly().GetManifestResourceStream("gamepad-test.html"))
+        {
+            if (rs == null) { MessageBox.Show(this, "The gamepad test page is missing from this build."); return; }
+            using var fs = File.Create(f);
+            rs.CopyTo(fs);
+        }
         Process.Start(new ProcessStartInfo(f) { UseShellExecute = true });
     }
 

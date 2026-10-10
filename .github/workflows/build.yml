@@ -2,7 +2,7 @@ name: build
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   pull_request:
 
 jobs:
@@ -17,9 +17,13 @@ jobs:
         run: dotnet build XControl.sln -c Release
       - name: Test (no driver needed)
         run: dotnet test tests/XControl.Tests -c Release --no-build
-      - name: Publish (self-contained, ReadyToRun)
-        run: dotnet publish src/XControl.App -c Release -r win-x64 --self-contained true -p:PublishReadyToRun=true -o publish
+      - name: Package (zip + single-file exe)
+        shell: pwsh
+        run: ./scripts/build.ps1 -SkipTests
       - uses: actions/upload-artifact@v4
         with:
           name: XControl-win-x64
-          path: publish
+          path: |
+            dist/*.zip
+            dist/*.exe
+            dist/*.sha256
